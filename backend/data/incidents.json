@@ -1,0 +1,27 @@
+[
+    {
+      "id": "INC-1024",
+      "type": "Cyclone",
+      "severity": "Warning",
+      "location": "Bay of Bengal",
+      "reportedAt": "2025-10-07T14:30:00Z",
+      "status": "Acknowledged"
+    },
+    {
+      "id": "INC-1023",
+      "type": "Flood",
+      "severity": "Critical",
+      "location": "Kochi, KL",
+      "reportedAt": "2025-10-07T14:15:00Z",
+      "status": "Open"
+    },
+    {
+      "id": "INC-1019",
+      "type": "Earthquake",
+      "severity": "Info",
+      "location": "Gujarat",
+      "reportedAt": "2025-10-07T13:20:00Z",
+      "status": "Resolved"
+    }
+  ]
+  

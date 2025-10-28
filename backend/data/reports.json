@@ -1,0 +1,627 @@
+{
+  "reports": [
+    {
+      "id": "1759846677197-5quvsi",
+      "category": "ocean",
+      "title": "Oil spill sighting",
+      "type": "Oil Spill",
+      "description": "Huge oil spill",
+      "location": "goa",
+      "pincode": "575003",
+      "createdAt": "2025-10-07T14:17:57.197Z",
+      "status": "submitted"
+    },
+    {
+      "id": "1759847050567-62mx2x",
+      "category": "criminal",
+      "title": "illegal fisshing activity",
+      "type": "Illegal Dumping",
+      "description": "illegal ",
+      "location": "Karkala",
+      "pincode": "575003",
+      "createdAt": "2025-10-07T14:24:10.567Z",
+      "status": "submitted"
+    },
+    {
+      "id": "1759849060334-8kwajd",
+      "category": "ocean",
+      "title": "Oil",
+      "type": "Oil Spill",
+      "description": "Spill",
+      "location": "goa",
+      "pincode": "575003",
+      "createdAt": "2025-10-07T14:57:40.334Z",
+      "status": "submitted"
+    },
+    {
+      "id": "1759854106547-xytkbq",
+      "category": "ocean",
+      "title": "Oil",
+      "type": "Oil Spill",
+      "description": "Spill of oil",
+      "location": "goa",
+      "pincode": "575003",
+      "createdAt": "2025-10-07T16:21:46.547Z",
+      "status": "submitted",
+      "ai": {
+        "isHazard": true,
+        "confidence": 0.715,
+        "components": {
+          "history": 0,
+          "keywords": 1,
+          "nlp": 0.83
+        }
+      }
+    },
+    {
+      "id": "1759854281482-eqbem8",
+      "category": "ocean",
+      "title": "Oil",
+      "type": "Oil Spill",
+      "description": "Spill totally",
+      "location": "goa",
+      "pincode": "575003",
+      "createdAt": "2025-10-07T16:24:41.482Z",
+      "status": "submitted",
+      "ai": {
+        "isHazard": false,
+        "confidence": 0.65,
+        "components": {
+          "history": 0,
+          "keywords": 1,
+          "nlp": 0.7
+        }
+      }
+    },
+    {
+      "id": "1759855151138-ym1140",
+      "category": "ocean",
+      "title": "Oil",
+      "type": "Oil Spill",
+      "description": "oil spill in the middle",
+      "location": "goa",
+      "pincode": "575003",
+      "createdAt": "2025-10-07T16:39:11.138Z",
+      "status": "submitted",
+      "ai": {
+        "isHazard": false,
+        "confidence": 0.476,
+        "components": {
+          "consensus": 0,
+          "history": 0,
+          "keywords": 1,
+          "nlp": 0.503
+        }
+      }
+    },
+    {
+      "id": "1759855511452-3p7sss",
+      "category": "ocean",
+      "title": "Spill",
+      "type": "Oil Spill",
+      "description": "Spill of oil in the ocean",
+      "location": "goa",
+      "pincode": "575003",
+      "createdAt": "2025-10-07T16:45:11.452Z",
+      "status": "submitted",
+      "ai": {
+        "isHazard": false,
+        "confidence": 0.53,
+        "components": {
+          "consensus": 0,
+          "history": 0,
+          "keywords": 1,
+          "nlp": 0.824
+        }
+      }
+    },
+    {
+      "id": "1759855545577-lwj009",
+      "category": "ocean",
+      "title": "Spill",
+      "type": "Oil Spill",
+      "description": "Ocean oil spill",
+      "location": "goa",
+      "pincode": "575003",
+      "createdAt": "2025-10-07T16:45:45.577Z",
+      "status": "submitted",
+      "ai": {
+        "isHazard": false,
+        "confidence": 0.558,
+        "components": {
+          "consensus": 0,
+          "history": 0,
+          "keywords": 1,
+          "nlp": 0.896
+        }
+      }
+    },
+    {
+      "id": "1759855586044-c45kia",
+      "category": "ocean",
+      "title": "Spill",
+      "type": "Oil Spill",
+      "description": "Ocean alli oil spill agta untu",
+      "location": "goa",
+      "pincode": "575003",
+      "createdAt": "2025-10-07T16:46:26.044Z",
+      "status": "submitted",
+      "ai": {
+        "isHazard": false,
+        "confidence": 0.584,
+        "components": {
+          "consensus": 0,
+          "history": 0,
+          "keywords": 1,
+          "nlp": 0.959
+        }
+      }
+    },
+    {
+      "id": "1759855630042-ofds3d",
+      "category": "ocean",
+      "title": "Spill",
+      "type": "Oil Spill",
+      "description": "Spill of oil in the middle of ocean",
+      "location": "goa",
+      "pincode": "575003",
+      "createdAt": "2025-10-07T16:47:10.042Z",
+      "status": "submitted",
+      "ai": {
+        "isHazard": false,
+        "confidence": 0.539,
+        "components": {
+          "consensus": 0,
+          "history": 0,
+          "keywords": 1,
+          "nlp": 0.848
+        }
+      }
+    },
+    {
+      "id": "1759856127159-a3eetj",
+      "category": "ocean",
+      "title": "Spill of oil",
+      "type": "Oil Spill",
+      "description": "Ocean oil spill",
+      "location": "goa",
+      "pincode": "575003",
+      "createdAt": "2025-10-07T16:55:27.159Z",
+      "status": "submitted",
+      "ai": {
+        "isHazard": false,
+        "confidence": 0,
+        "components": {
+          "consensus": 0,
+          "history": 0,
+          "keywords": 0,
+          "nlp": 0
+        }
+      }
+    },
+    {
+      "id": "1759856208572-mru2jp",
+      "category": "ocean",
+      "title": "Spill of oil",
+      "type": "Oil Spill",
+      "description": "Oil spill in the middle of the ocean",
+      "location": "goa",
+      "pincode": "575003",
+      "createdAt": "2025-10-07T16:56:48.572Z",
+      "status": "submitted",
+      "ai": {
+        "isHazard": false,
+        "confidence": 0,
+        "components": {
+          "consensus": 0,
+          "history": 0,
+          "keywords": 0,
+          "nlp": 0
+        }
+      }
+    },
+    {
+      "id": "1759856251934-dgylmk",
+      "category": "ocean",
+      "title": "Oil spill",
+      "type": "Oil Spill",
+      "description": "Ocean alli oil spill agta untu",
+      "location": "goa",
+      "pincode": "575003",
+      "createdAt": "2025-10-07T16:57:31.934Z",
+      "status": "submitted",
+      "ai": {
+        "isHazard": false,
+        "confidence": 0,
+        "components": {
+          "consensus": 0,
+          "history": 0,
+          "keywords": 0,
+          "nlp": 0
+        }
+      }
+    },
+    {
+      "id": "1759856753576-7r1cce",
+      "category": "ocean",
+      "title": "Oil spill",
+      "type": "Oil Spill",
+      "description": "Spill",
+      "location": "goa",
+      "pincode": "575003",
+      "createdAt": "2025-10-07T17:05:53.576Z",
+      "status": "submitted",
+      "ai": {
+        "isHazard": false,
+        "confidence": 0,
+        "components": {
+          "consensus": 0,
+          "history": 0,
+          "keywords": 0,
+          "nlp": 0
+        }
+      }
+    },
+    {
+      "id": "1759856794098-emt9i2",
+      "category": "ocean",
+      "title": "Spill",
+      "type": "Oil Spill",
+      "description": "ocean oil spill",
+      "location": "goa",
+      "pincode": "575003",
+      "createdAt": "2025-10-07T17:06:34.098Z",
+      "status": "submitted",
+      "ai": {
+        "isHazard": false,
+        "confidence": 0,
+        "components": {
+          "consensus": 0,
+          "history": 0,
+          "keywords": 0,
+          "nlp": 0
+        }
+      }
+    },
+    {
+      "id": "1759856829660-wess37",
+      "category": "ocean",
+      "title": "Spill",
+      "type": "Oil Spill",
+      "description": "Oil spill",
+      "location": "goa",
+      "pincode": "575003",
+      "createdAt": "2025-10-07T17:07:09.660Z",
+      "status": "submitted",
+      "ai": {
+        "isHazard": false,
+        "confidence": 0,
+        "components": {
+          "consensus": 0,
+          "history": 0,
+          "keywords": 0,
+          "nlp": 0
+        }
+      }
+    },
+    {
+      "id": "1759857168361-xt4hqt",
+      "category": "ocean",
+      "title": "Oil spill",
+      "type": "Oil Spill",
+      "description": "Oil spill",
+      "location": "goa",
+      "pincode": "575003",
+      "createdAt": "2025-10-07T17:12:48.361Z",
+      "status": "submitted",
+      "ai": {
+        "isHazard": true,
+        "confidence": 1,
+        "components": {
+          "consensus": 1,
+          "counts": {
+            "pair_count": 15,
+            "type_count": 15
+          },
+          "history": 1,
+          "keywords": 0,
+          "nlp": 0
+        }
+      }
+    },
+    {
+      "id": "1759857218279-gpfpds",
+      "category": "ocean",
+      "title": "Spill of oil",
+      "type": "Oil Spill",
+      "description": "Spill of oil in the ocean",
+      "location": "goa",
+      "pincode": "575003",
+      "createdAt": "2025-10-07T17:13:38.279Z",
+      "status": "submitted",
+      "ai": {
+        "isHazard": true,
+        "confidence": 1,
+        "components": {
+          "consensus": 1,
+          "counts": {
+            "pair_count": 16,
+            "type_count": 16
+          },
+          "history": 1,
+          "keywords": 0,
+          "nlp": 0
+        }
+      }
+    },
+    {
+      "id": "1759857266199-w6woa9",
+      "category": "ocean",
+      "title": "Distress",
+      "type": "Marine Life Distress",
+      "description": "Marine life in distress",
+      "location": "goa",
+      "pincode": "575003",
+      "createdAt": "2025-10-07T17:14:26.199Z",
+      "status": "submitted",
+      "ai": {
+        "isHazard": false,
+        "confidence": 0,
+        "components": {
+          "consensus": 0,
+          "counts": {
+            "pair_count": 0,
+            "type_count": 0
+          },
+          "history": 0,
+          "keywords": 0,
+          "nlp": 0
+        }
+      }
+    },
+    {
+      "id": "1759857307577-4y29tg",
+      "category": "ocean",
+      "title": "MLD",
+      "type": "Marine Life Distress",
+      "description": "MLD",
+      "location": "goa",
+      "pincode": "575003",
+      "createdAt": "2025-10-07T17:15:07.577Z",
+      "status": "submitted",
+      "ai": {
+        "isHazard": false,
+        "confidence": 0.333,
+        "components": {
+          "consensus": 0.333,
+          "counts": {
+            "pair_count": 1,
+            "type_count": 1
+          },
+          "history": 0.333,
+          "keywords": 0,
+          "nlp": 0
+        }
+      }
+    },
+    {
+      "id": "1759857338616-l9b9qr",
+      "category": "ocean",
+      "title": "Spill",
+      "type": "Oil Spill",
+      "description": "OS",
+      "location": "goa",
+      "pincode": "575003",
+      "createdAt": "2025-10-07T17:15:38.616Z",
+      "status": "submitted",
+      "ai": {
+        "isHazard": true,
+        "confidence": 1,
+        "components": {
+          "consensus": 1,
+          "counts": {
+            "pair_count": 17,
+            "type_count": 17
+          },
+          "history": 1,
+          "keywords": 0,
+          "nlp": 0
+        }
+      }
+    },
+    {
+      "id": "1759857375991-vuh3wi",
+      "category": "ocean",
+      "title": "Flood",
+      "type": "Flood",
+      "description": "Flood",
+      "location": "goa",
+      "pincode": "575003",
+      "createdAt": "2025-10-07T17:16:15.991Z",
+      "status": "submitted",
+      "ai": {
+        "isHazard": false,
+        "confidence": 0,
+        "components": {
+          "consensus": 0,
+          "counts": {
+            "pair_count": 0,
+            "type_count": 0
+          },
+          "history": 0,
+          "keywords": 0,
+          "nlp": 0
+        }
+      }
+    },
+    {
+      "id": "1759857407178-hq53sr",
+      "category": "ocean",
+      "title": "Flood",
+      "type": "Flood",
+      "description": "Flood",
+      "location": "goa",
+      "pincode": "575003",
+      "createdAt": "2025-10-07T17:16:47.178Z",
+      "status": "submitted",
+      "ai": {
+        "isHazard": false,
+        "confidence": 0.333,
+        "components": {
+          "consensus": 0.333,
+          "counts": {
+            "pair_count": 1,
+            "type_count": 1
+          },
+          "history": 0.333,
+          "keywords": 0,
+          "nlp": 0
+        }
+      }
+    },
+    {
+      "id": "1759857442069-u36ps5",
+      "category": "ocean",
+      "title": "Flood",
+      "type": "Flood",
+      "description": "Flood",
+      "location": "goa",
+      "pincode": "575003",
+      "createdAt": "2025-10-07T17:17:22.069Z",
+      "status": "submitted",
+      "ai": {
+        "isHazard": false,
+        "confidence": 0.667,
+        "components": {
+          "consensus": 0.667,
+          "counts": {
+            "pair_count": 2,
+            "type_count": 2
+          },
+          "history": 0.667,
+          "keywords": 0,
+          "nlp": 0
+        }
+      }
+    },
+    {
+      "id": "1759857477957-f0u5ib",
+      "category": "ocean",
+      "title": "Flood",
+      "type": "Flood",
+      "description": "Flood",
+      "location": "goa",
+      "pincode": "575003",
+      "createdAt": "2025-10-07T17:17:57.956Z",
+      "status": "submitted",
+      "ai": {
+        "isHazard": true,
+        "confidence": 1,
+        "components": {
+          "consensus": 1,
+          "counts": {
+            "pair_count": 3,
+            "type_count": 3
+          },
+          "history": 1,
+          "keywords": 0,
+          "nlp": 0
+        }
+      }
+    },
+    {
+      "id": "1759857519690-ilsswu",
+      "category": "ocean",
+      "title": "Flood",
+      "type": "Flood",
+      "description": "Flood",
+      "location": "goa",
+      "pincode": "575001",
+      "createdAt": "2025-10-07T17:18:39.690Z",
+      "status": "submitted",
+      "ai": {
+        "isHazard": false,
+        "confidence": 0.4,
+        "components": {
+          "consensus": 0,
+          "counts": {
+            "pair_count": 0,
+            "type_count": 4
+          },
+          "history": 1,
+          "keywords": 0,
+          "nlp": 0
+        }
+      }
+    },
+    {
+      "id": "1761637898152-2h1ff5",
+      "category": "ocean",
+      "title": "flood",
+      "type": "High Waves",
+      "description": "high flood",
+      "location": "udupi",
+      "pincode": "576212",
+      "createdAt": "2025-10-28T07:51:38.152Z",
+      "status": "submitted",
+      "ai": {
+        "isHazard": false,
+        "confidence": 0,
+        "components": {
+          "consensus": 0,
+          "counts": {
+            "pair_count": 0,
+            "type_count": 0
+          },
+          "history": 0,
+          "keywords": 0,
+          "nlp": 0
+        }
+      }
+    },
+    {
+      "id": "1761640927388-8locbt",
+      "category": "ocean",
+      "title": "flood ",
+      "type": "Flood",
+      "description": "fghjk",
+      "location": "udupi",
+      "pincode": "576213",
+      "image": "1761640927382-z443m6-flood.jpeg",
+      "createdAt": "2025-10-28T08:42:07.387Z",
+      "status": "submitted",
+      "ai": {
+        "isHazard": false,
+        "confidence": 0.4,
+        "components": {
+          "consensus": 0,
+          "counts": {
+            "pair_count": 0,
+            "type_count": 5
+          },
+          "history": 1,
+          "keywords": 0,
+          "nlp": 0
+        }
+      }
+    },
+    {
+      "id": "1761669749848-ybs7k1",
+      "category": "ocean",
+      "title": "Oil",
+      "type": "Oil Spill",
+      "description": "there is a oil spill in ocean",
+      "location": "OCEAN",
+      "pincode": "576107",
+      "image": "1761669749838-cl55b7-OIl_spill.avif",
+      "createdAt": "2025-10-28T16:42:29.848Z",
+      "status": "submitted",
+      "ai": {
+        "isHazard": null,
+        "confidence": null,
+        "components": null,
+        "error": "ai_unavailable"
+      }
+    }
+  ]
+}
