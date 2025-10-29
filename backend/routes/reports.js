@@ -1,3 +1,5 @@
+// routes/reports.js
+
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
@@ -6,21 +8,17 @@ const auth = require('../middleware/authmiddleware');
 const { sendReportStatusNotification } = require('../services/notificationService');
 const router = express.Router();
 const axios = require('axios');
+const FormData = require('form-data');
 
+// --- Configuration and Storage Setup ---
 const DATA_DIR = path.join(__dirname, '..', 'data');
-const UPLOADS_DIR = path.join(__dirname, '..', 'uploads'); 
+const UPLOADS_DIR = path.join(__dirname, '..', 'uploads');
 const DATA_FILE = path.join(DATA_DIR, 'reports.json');
 
 function ensureStorage() {
-  if (!fs.existsSync(DATA_DIR)) {
-    fs.mkdirSync(DATA_DIR, { recursive: true });
-  }
-  if (!fs.existsSync(UPLOADS_DIR)) { // <-- NEW: Create the uploads directory
-    fs.mkdirSync(UPLOADS_DIR, { recursive: true });
-  }
-  if (!fs.existsSync(DATA_FILE)) {
-    fs.writeFileSync(DATA_FILE, JSON.stringify({ reports: [] }, null, 2), 'utf-8');
-  }
+  if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
+  if (!fs.existsSync(UPLOADS_DIR)) fs.mkdirSync(UPLOADS_DIR, { recursive: true });
+  if (!fs.existsSync(DATA_FILE)) fs.writeFileSync(DATA_FILE, JSON.stringify({ reports: [] }, null, 2));
 }
 
 function readReports() {
@@ -36,7 +34,7 @@ function readReports() {
 
 function writeReports(reports) {
   ensureStorage();
-  fs.writeFileSync(DATA_FILE, JSON.stringify({ reports }, null, 2), 'utf-8');
+  fs.writeFileSync(DATA_FILE, JSON.stringify({ reports }, null, 2));
 }
 
 function computeTextMatchScore(title, predictedLabel) {
@@ -46,109 +44,117 @@ function computeTextMatchScore(title, predictedLabel) {
   return t.includes(p) || p.includes(t) ? 1 : 0;
 }
 
-// --- Multer Configuration ---
-// Tells multer where and how to save the files
+// --- Multer Storage ---
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, UPLOADS_DIR); // Save files to the 'uploads/' directory
-  },
-  filename: function (req, file, cb) {
-    // Create a unique filename to avoid conflicts
+  destination: (req, file, cb) => cb(null, UPLOADS_DIR),
+  filename: (req, file, cb) => {
     const uniqueSuffix = Date.now() + '-' + Math.random().toString(36).slice(2, 8);
-    // Clean up filename (e.g., replace spaces)
-    const originalName = file.originalname.replace(/\s+/g, '_');
-    cb(null, uniqueSuffix + '-' + originalName);
-  }
+    cb(null, uniqueSuffix + '-' + file.originalname.replace(/\s+/g, '_'));
+  },
 });
 
-const upload = multer({ storage: storage });
-// --- End Multer Configuration ---
+const upload = multer({ storage });
 
-
-
+// --- Route: GET all reports ---
 router.get('/', (req, res) => {
   try {
     const { pincode } = req.query;
     let reports = readReports();
-
-    if (pincode) {
-      reports = reports.filter(report => report.pincode === pincode);
-    }
-
-    const sortedReports = reports.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-    res.json(sortedReports);
+    if (pincode) reports = reports.filter(r => r.pincode === pincode);
+    const sorted = reports.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    res.json(sorted);
   } catch (err) {
     res.status(500).json({ error: 'Failed to read reports', details: err.message });
   }
 });
 
-
-// <-- UPDATED: Add the 'upload.single('image')' middleware
-// This tells multer to look for a single file upload with the field name 'image'
+// --- Route: POST new report ---
 router.post('/', auth, upload.single('image'), async (req, res) => {
   try {
-    // When using multer, text fields are in 'req.body'
     const { category, title, type, description, location, pincode } = req.body || {};
-    
-    // The uploaded file info is in 'req.file'
-    // req.file will be 'undefined' if no file was uploaded
-    
     if (!category || !title || !description) {
+      if (req.file) fs.unlinkSync(req.file.path);
       return res.status(400).json({ error: 'category, title and description are required' });
     }
 
     const now = new Date().toISOString();
     const report = {
       id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
-      category, // 'criminal' | 'municipality' | 'ocean'
+      category,
       title,
       type: type || 'Other',
       description,
       location: location || '',
       pincode: pincode || '',
-      
-      // <-- NEW: Add the image filename to your report object
-      // We only store the filename, not the whole path
-      image: req.file ? req.file.filename : null, 
-      
+      image: req.file ? req.file.filename : null,
       createdAt: now,
       status: 'Pending',
       reporterId: req.user?._id?.toString?.() || null,
-      ai: undefined
+      ai: null,
+      authenticity: null,
     };
 
-    // Call AI service (this part remains the same)
-    try {
-      const aiRes = await axios.post('http://localhost:8000/verify-hazard', {
-        description: report.description,
-        type: report.type,
-        location: report.location,
-        pincode: report.pincode
-      }, { timeout: 5000 });
-      const ai = aiRes.data || {};
-      report.ai = {
-        isHazard: !!ai.isHazard,
-        confidence: typeof ai.confidence === 'number' ? ai.confidence : null,
-        components: ai.components || null
-      };
-      console.log(`[reports] AI ok: id=${report.id} conf=${report.ai.confidence}`);
-    } catch (e) {
-      console.warn(`[reports] AI unavailable for id=${report.id}:`, e.message);
-      report.ai = { isHazard: null, confidence: null, components: null, error: 'ai_unavailable' };
+    // ✅ Step 1: Call the ML model service
+    if (req.file) {
+      console.log(`[reports] Sending image to ML service: ${req.file.path}`);
+
+      const formData = new FormData();
+      formData.append('title', title);
+      formData.append('description', description || '');
+      formData.append('type', type || '');
+      formData.append('location', location || '');
+      formData.append('pincode', pincode || '');
+      formData.append('image', fs.createReadStream(req.file.path));
+
+      try {
+        const mlResponse = await axios.post('http://127.0.0.1:8000/verify-hazard', formData, {
+          headers: formData.getHeaders(),
+          timeout: 15000,
+        });
+
+        const ml = mlResponse.data;
+        console.log(`[reports] ML Prediction: ${ml.predictedLabel} (${ml.confidence})`);
+
+        report.ai = {
+          predictedLabel: ml.predictedLabel,
+          confidence: ml.confidence,
+          isHazard: ml.isHazard,
+          components: ml.components,
+        };
+
+        const textScore = computeTextMatchScore(title, ml.predictedLabel);
+        report.authenticity = textScore > 0 && ml.isHazard;
+      } catch (err) {
+        console.warn(`[reports] ML service failed: ${err.message}`);
+        report.ai = { error: 'ml_unavailable' };
+        report.authenticity = null;
+      }
     }
 
     const reports = readReports();
     reports.push(report);
     writeReports(reports);
+
     res.status(201).json({ message: 'Report saved', report });
   } catch (err) {
+    if (req.file && fs.existsSync(req.file.path)) fs.unlinkSync(req.file.path);
     res.status(500).json({ error: 'Failed to save report', details: err.message });
   }
 });
 
-// Get AI-verified "real" reports (confidence >= 0.8 by default)
-// Note: public access enabled to surface data on authorities dashboard without JWT
-router.get('/real', async (req, res) => {
+// --- Route: GET only authentic reports ---
+router.get('/authentic', (req, res) => {
+  try {
+    const reports = readReports();
+    const authenticReports = reports.filter(r => r.authenticity === true);
+    res.json(authenticReports);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch authentic reports', details: err.message });
+  }
+});
+
+// --- Route: GET real hazard reports ---
+router.get('/real', (req, res) => {
   try {
     const minConfidenceParam = req.query.minConfidence;
     const minConfidence = Number.isFinite(Number(minConfidenceParam))
@@ -157,7 +163,13 @@ router.get('/real', async (req, res) => {
 
     const reports = readReports();
     const realReports = reports
-      .filter(r => r?.ai && r.ai.isHazard === true && typeof r.ai.confidence === 'number' && r.ai.confidence >= minConfidence)
+      .filter(
+        r =>
+          r?.ai &&
+          r.ai.isHazard === true &&
+          typeof r.ai.confidence === 'number' &&
+          r.ai.confidence >= minConfidence
+      )
       .sort((a, b) => {
         const byConfidence = (b.ai?.confidence || 0) - (a.ai?.confidence || 0);
         if (byConfidence !== 0) return byConfidence;
@@ -170,8 +182,7 @@ router.get('/real', async (req, res) => {
   }
 });
 
-// Update status: only authorities can update
-// Temporarily removed auth for testing
+// --- Route: PUT update report status ---
 router.put('/:id/status', async (req, res) => {
   try {
     const id = req.params.id;
@@ -181,12 +192,6 @@ router.put('/:id/status', async (req, res) => {
     if (!allowed.includes(newStatus)) {
       return res.status(400).json({ error: 'Invalid status' });
     }
-
-    // Temporarily bypass authentication for testing
-    // TODO: Add proper authentication in production
-    // if (!req.user) {
-    //   return res.status(403).json({ error: 'Authentication required' });
-    // }
 
     const reports = readReports();
     const idx = reports.findIndex(r => r.id === id);
@@ -199,7 +204,6 @@ router.put('/:id/status', async (req, res) => {
     reports[idx] = report;
     writeReports(reports);
 
-    // Notify original reporter (best-effort)
     if (report.reporterId) {
       sendReportStatusNotification(report.reporterId, report.title, newStatus, authorityNotes).catch(() => {});
     }

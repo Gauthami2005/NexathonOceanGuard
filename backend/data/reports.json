@@ -759,6 +759,52 @@
       },
       "authorityNotes": "Bulk resolved by authorities",
       "updatedAt": "2025-10-29T01:46:45.564Z"
+    },
+    {
+      "id": "1761711264378-z3q5dh",
+      "category": "ocean",
+      "title": "flood",
+      "type": "Flood",
+      "description": "water flowing everywhere",
+      "location": "Udupi",
+      "pincode": "575003",
+      "image": "1761711264363-n2ergc-saikiran-kesari-qVULJ6acwe8-unsplash.jpg",
+      "createdAt": "2025-10-29T04:14:24.378Z",
+      "status": "Pending",
+      "reporterId": null,
+      "ai": {
+        "isHazard": null,
+        "confidence": null,
+        "components": null,
+        "error": "ai_unavailable"
+      }
+    },
+    {
+      "id": "1761711762510-llfqy8",
+      "category": "ocean",
+      "title": "flood",
+      "type": "Flood",
+      "description": "water ",
+      "location": "Mangalore",
+      "pincode": "575003",
+      "image": "1761711762499-uznoao-saikiran-kesari-qVULJ6acwe8-unsplash.jpg",
+      "createdAt": "2025-10-29T04:22:42.510Z",
+      "status": "Pending",
+      "reporterId": null,
+      "ai": {
+        "isHazard": true,
+        "confidence": 1,
+        "components": {
+          "consensus": 1,
+          "counts": {
+            "pair_count": 5,
+            "type_count": 8
+          },
+          "history": 1,
+          "keywords": 0,
+          "nlp": 0
+        }
+      }
     }
   ]
 }
