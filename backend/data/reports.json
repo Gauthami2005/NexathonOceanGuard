@@ -622,6 +622,25 @@
         "components": null,
         "error": "ai_unavailable"
       }
+    },
+    {
+      "id": "1761697465974-6pgz8f",
+      "category": "ocean",
+      "title": "flood",
+      "type": "Flood",
+      "description": "fdzg",
+      "location": "managlore",
+      "pincode": "576213",
+      "image": "1761697465970-qek9sb-flood.jpeg",
+      "createdAt": "2025-10-29T00:24:25.974Z",
+      "status": "Pending",
+      "reporterId": null,
+      "ai": {
+        "isHazard": null,
+        "confidence": null,
+        "components": null,
+        "error": "ai_unavailable"
+      }
     }
   ]
 }
