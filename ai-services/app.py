@@ -1,12 +1,11 @@
 
 from flask import Flask, request, jsonify
-from transformers import pipeline
 import os
 import json
 from datetime import datetime, timedelta
 
 app = Flask(__name__)
-classifier = pipeline("zero-shot-classification", model="typeform/distilbert-base-uncased-mnli")
+# Note: ML model loading removed for compatibility - using rule-based approach instead
 
 
 

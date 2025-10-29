@@ -313,7 +313,7 @@
       "location": "goa",
       "pincode": "575003",
       "createdAt": "2025-10-07T17:12:48.361Z",
-      "status": "submitted",
+      "status": "Resolved",
       "ai": {
         "isHazard": true,
         "confidence": 1,
@@ -327,7 +327,9 @@
           "keywords": 0,
           "nlp": 0
         }
-      }
+      },
+      "authorityNotes": "Incident resolved by authorities",
+      "updatedAt": "2025-10-29T01:34:25.747Z"
     },
     {
       "id": "1759857218279-gpfpds",
@@ -338,7 +340,7 @@
       "location": "goa",
       "pincode": "575003",
       "createdAt": "2025-10-07T17:13:38.279Z",
-      "status": "submitted",
+      "status": "Resolved",
       "ai": {
         "isHazard": true,
         "confidence": 1,
@@ -352,7 +354,9 @@
           "keywords": 0,
           "nlp": 0
         }
-      }
+      },
+      "authorityNotes": "Incident resolved by authorities",
+      "updatedAt": "2025-10-29T01:34:21.742Z"
     },
     {
       "id": "1759857266199-w6woa9",
@@ -413,7 +417,7 @@
       "location": "goa",
       "pincode": "575003",
       "createdAt": "2025-10-07T17:15:38.616Z",
-      "status": "submitted",
+      "status": "Resolved",
       "ai": {
         "isHazard": true,
         "confidence": 1,
@@ -427,7 +431,9 @@
           "keywords": 0,
           "nlp": 0
         }
-      }
+      },
+      "authorityNotes": "Incident resolved by authorities",
+      "updatedAt": "2025-10-29T01:34:17.628Z"
     },
     {
       "id": "1759857375991-vuh3wi",
@@ -513,7 +519,7 @@
       "location": "goa",
       "pincode": "575003",
       "createdAt": "2025-10-07T17:17:57.956Z",
-      "status": "submitted",
+      "status": "Resolved",
       "ai": {
         "isHazard": true,
         "confidence": 1,
@@ -527,7 +533,9 @@
           "keywords": 0,
           "nlp": 0
         }
-      }
+      },
+      "authorityNotes": "Incident resolved by authorities",
+      "updatedAt": "2025-10-29T01:34:09.575Z"
     },
     {
       "id": "1759857519690-ilsswu",
@@ -641,6 +649,116 @@
         "components": null,
         "error": "ai_unavailable"
       }
+    },
+    {
+      "id": "1761699816566-fskd84",
+      "category": "ocean",
+      "title": "tsunami",
+      "type": "Tsunami",
+      "description": "Tsunami",
+      "location": "Manipal",
+      "pincode": "575003",
+      "image": null,
+      "createdAt": "2025-10-29T01:03:36.566Z",
+      "status": "Pending",
+      "reporterId": null,
+      "ai": {
+        "isHazard": false,
+        "confidence": 0,
+        "components": {
+          "consensus": 0,
+          "counts": {
+            "pair_count": 0,
+            "type_count": 0
+          },
+          "history": 0,
+          "keywords": 0,
+          "nlp": 0
+        }
+      }
+    },
+    {
+      "id": "1761699905468-5gv7rk",
+      "category": "ocean",
+      "title": "tsunami",
+      "type": "Tsunami",
+      "description": "Tsunami water",
+      "location": "Manipal",
+      "pincode": "575003",
+      "image": "1761699905442-ns38kd-saikiran-kesari-qVULJ6acwe8-unsplash.jpg",
+      "createdAt": "2025-10-29T01:05:05.468Z",
+      "status": "Pending",
+      "reporterId": null,
+      "ai": {
+        "isHazard": false,
+        "confidence": 0.333,
+        "components": {
+          "consensus": 0.333,
+          "counts": {
+            "pair_count": 1,
+            "type_count": 1
+          },
+          "history": 0.333,
+          "keywords": 0,
+          "nlp": 0
+        }
+      }
+    },
+    {
+      "id": "1761702343165-yohngm",
+      "category": "ocean",
+      "title": "tsunami",
+      "type": "Tsunami",
+      "description": "lot of water",
+      "location": "manipal",
+      "pincode": "575003",
+      "image": null,
+      "createdAt": "2025-10-29T01:45:43.165Z",
+      "status": "Pending",
+      "reporterId": null,
+      "ai": {
+        "isHazard": false,
+        "confidence": 0.667,
+        "components": {
+          "consensus": 0.667,
+          "counts": {
+            "pair_count": 2,
+            "type_count": 2
+          },
+          "history": 0.667,
+          "keywords": 0,
+          "nlp": 0
+        }
+      }
+    },
+    {
+      "id": "1761702388432-0vj39f",
+      "category": "ocean",
+      "title": "tsunami",
+      "type": "Tsunami",
+      "description": "water water water",
+      "location": "Udupi",
+      "pincode": "575003",
+      "image": null,
+      "createdAt": "2025-10-29T01:46:28.432Z",
+      "status": "Resolved",
+      "reporterId": null,
+      "ai": {
+        "isHazard": true,
+        "confidence": 1,
+        "components": {
+          "consensus": 1,
+          "counts": {
+            "pair_count": 3,
+            "type_count": 3
+          },
+          "history": 1,
+          "keywords": 0,
+          "nlp": 0
+        }
+      },
+      "authorityNotes": "Bulk resolved by authorities",
+      "updatedAt": "2025-10-29T01:46:45.564Z"
     }
   ]
 }

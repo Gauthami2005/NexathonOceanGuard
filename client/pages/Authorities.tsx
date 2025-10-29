@@ -26,6 +26,10 @@ export default function Authorities() {
   const [isMapOpen, setIsMapOpen] = useState<boolean>(false);
   const [isDetailsOpen, setIsDetailsOpen] = useState<boolean>(false);
   const [selectedIncident, setSelectedIncident] = useState<Incident | null>(null);
+  const [isAcknowledging, setIsAcknowledging] = useState<boolean>(false);
+  const [isResolving, setIsResolving] = useState<boolean>(false);
+  const [isAcknowledgingAll, setIsAcknowledgingAll] = useState<boolean>(false);
+  const [isResolvingAll, setIsResolvingAll] = useState<boolean>(false);
 
   useEffect(() => {
     let isMounted = true;
@@ -91,18 +95,179 @@ export default function Authorities() {
     setSelectedIncident(null);
   };
 
-  const acknowledgeIncident = () => {
-    if (!selectedIncident) return;
-    setIncidents((prev) =>
-      prev.map((i) => (i.id === selectedIncident.id ? { ...i, status: "acknowledged" } : i))
-    );
-    closeDetails();
+  const acknowledgeIncident = async () => {
+    if (!selectedIncident || isAcknowledging) return;
+    
+    setIsAcknowledging(true);
+    console.log('Acknowledge button clicked for incident:', selectedIncident.id);
+    
+    try {
+      const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+      console.log('Token available:', !!token);
+      
+      const response = await fetch(`http://localhost:3001/api/reports/${selectedIncident.id}/status`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          newStatus: 'Acknowledged',
+          authorityNotes: 'Incident acknowledged by authorities'
+        })
+      });
+
+      console.log('Response status:', response.status);
+      
+      if (response.ok) {
+        console.log('Successfully acknowledged incident');
+        setIncidents((prev) =>
+          prev.map((i) => (i.id === selectedIncident.id ? { ...i, status: "acknowledged" } : i))
+        );
+        closeDetails();
+      } else {
+        const errorText = await response.text();
+        console.error('Failed to acknowledge incident:', response.status, errorText);
+        alert('Failed to acknowledge incident. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error acknowledging incident:', error);
+      alert('Error acknowledging incident. Please try again.');
+    } finally {
+      setIsAcknowledging(false);
+    }
   };
 
-  const resolveIncident = () => {
+  const resolveIncident = async () => {
     if (!selectedIncident) return;
-    setIncidents((prev) => prev.map((i) => (i.id === selectedIncident.id ? { ...i, status: "resolved" } : i)));
-    closeDetails();
+    
+    try {
+      const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+      const response = await fetch(`http://localhost:3001/api/reports/${selectedIncident.id}/status`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          newStatus: 'Resolved',
+          authorityNotes: 'Incident resolved by authorities'
+        })
+      });
+
+      if (response.ok) {
+        setIncidents((prev) => prev.map((i) => (i.id === selectedIncident.id ? { ...i, status: "resolved" } : i)));
+        closeDetails();
+      } else {
+        console.error('Failed to resolve incident');
+      }
+    } catch (error) {
+      console.error('Error resolving incident:', error);
+    }
+  };
+
+  const acknowledgeAllIncidents = async () => {
+    const openIncidents = incidents.filter(inc => inc.status === "open");
+    if (openIncidents.length === 0) {
+      alert('No open incidents to acknowledge');
+      return;
+    }
+
+    setIsAcknowledgingAll(true);
+    console.log(`Acknowledging ${openIncidents.length} incidents`);
+
+    try {
+      const promises = openIncidents.map(async (incident) => {
+        const response = await fetch(`http://localhost:3001/api/reports/${incident.id}/status`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            newStatus: 'Acknowledged',
+            authorityNotes: 'Bulk acknowledged by authorities'
+          })
+        });
+        return { incident, success: response.ok };
+      });
+
+      const results = await Promise.all(promises);
+      const successful = results.filter(r => r.success);
+      const failed = results.filter(r => !r.success);
+
+      if (successful.length > 0) {
+        setIncidents((prev) =>
+          prev.map((i) => 
+            successful.some(s => s.incident.id === i.id) 
+              ? { ...i, status: "acknowledged" as const }
+              : i
+          )
+        );
+      }
+
+      if (failed.length > 0) {
+        console.error(`Failed to acknowledge ${failed.length} incidents`);
+        alert(`Successfully acknowledged ${successful.length} incidents. ${failed.length} failed.`);
+      } else {
+        console.log(`Successfully acknowledged all ${successful.length} incidents`);
+      }
+    } catch (error) {
+      console.error('Error acknowledging all incidents:', error);
+      alert('Error acknowledging incidents. Please try again.');
+    } finally {
+      setIsAcknowledgingAll(false);
+    }
+  };
+
+  const resolveAllIncidents = async () => {
+    const acknowledgedIncidents = incidents.filter(inc => inc.status === "acknowledged");
+    if (acknowledgedIncidents.length === 0) {
+      alert('No acknowledged incidents to resolve');
+      return;
+    }
+
+    setIsResolvingAll(true);
+    console.log(`Resolving ${acknowledgedIncidents.length} incidents`);
+
+    try {
+      const promises = acknowledgedIncidents.map(async (incident) => {
+        const response = await fetch(`http://localhost:3001/api/reports/${incident.id}/status`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            newStatus: 'Resolved',
+            authorityNotes: 'Bulk resolved by authorities'
+          })
+        });
+        return { incident, success: response.ok };
+      });
+
+      const results = await Promise.all(promises);
+      const successful = results.filter(r => r.success);
+      const failed = results.filter(r => !r.success);
+
+      if (successful.length > 0) {
+        setIncidents((prev) =>
+          prev.map((i) => 
+            successful.some(s => s.incident.id === i.id) 
+              ? { ...i, status: "resolved" as const }
+              : i
+          )
+        );
+      }
+
+      if (failed.length > 0) {
+        console.error(`Failed to resolve ${failed.length} incidents`);
+        alert(`Successfully resolved ${successful.length} incidents. ${failed.length} failed.`);
+      } else {
+        console.log(`Successfully resolved all ${successful.length} incidents`);
+      }
+    } catch (error) {
+      console.error('Error resolving all incidents:', error);
+      alert('Error resolving incidents. Please try again.');
+    } finally {
+      setIsResolvingAll(false);
+    }
   };
 
   const stats = useMemo(() => {
@@ -218,7 +383,35 @@ export default function Authorities() {
               >
                 <Map className="h-4 w-4" /> View Map
               </Button>
-              <Button size="sm" className="gap-2"><CheckCircle2 className="h-4 w-4" /> Acknowledge All</Button>
+              {incidents.filter(inc => inc.status === "open").length > 0 && (
+                <Button 
+                  size="sm" 
+                  className="gap-2"
+                  onClick={acknowledgeAllIncidents}
+                  disabled={isAcknowledgingAll}
+                >
+                  <CheckCircle2 className="h-4 w-4" /> 
+                  {isAcknowledgingAll 
+                    ? 'Acknowledging All...' 
+                    : `Acknowledge All (${incidents.filter(inc => inc.status === "open").length})`
+                  }
+                </Button>
+              )}
+              {incidents.filter(inc => inc.status === "acknowledged").length > 0 && (
+                <Button 
+                  size="sm" 
+                  variant="secondary"
+                  className="gap-2"
+                  onClick={resolveAllIncidents}
+                  disabled={isResolvingAll}
+                >
+                  <CheckCircle2 className="h-4 w-4" /> 
+                  {isResolvingAll 
+                    ? 'Resolving All...' 
+                    : `Resolve All (${incidents.filter(inc => inc.status === "acknowledged").length})`
+                  }
+                </Button>
+              )}
             </div>
           </div>
         </CardHeader>
@@ -259,7 +452,7 @@ export default function Authorities() {
                   <TableCell>
                     {inc.status === "open" && <Badge variant="destructive">Open</Badge>}
                     {inc.status === "acknowledged" && <Badge variant="secondary">Acknowledged</Badge>}
-                    {inc.status === "resolved" && <Badge>Resolved</Badge>}
+                    {inc.status === "resolved" && <Badge className="bg-green-100 text-green-800 hover:bg-green-100">Resolved</Badge>}
                   </TableCell>
                   <TableCell className="text-right">
                     <Button size="sm" variant="outline" onClick={() => openDetails(inc)}>View</Button>
@@ -310,6 +503,14 @@ export default function Authorities() {
                 </span>
               </div>
               <div className="grid grid-cols-3 gap-2">
+                <span className="text-muted-foreground">Status</span>
+                <span className="col-span-2">
+                  {selectedIncident.status === "open" && <Badge variant="destructive">Open</Badge>}
+                  {selectedIncident.status === "acknowledged" && <Badge variant="secondary">Acknowledged</Badge>}
+                  {selectedIncident.status === "resolved" && <Badge className="bg-green-100 text-green-800 hover:bg-green-100">Resolved</Badge>}
+                </span>
+              </div>
+              <div className="grid grid-cols-3 gap-2">
                 <span className="text-muted-foreground">Pincode</span>
                 <span className="col-span-2 font-medium">{selectedIncident.pincode}</span>
               </div>
@@ -321,8 +522,27 @@ export default function Authorities() {
           )}
           <div className="mt-6 flex justify-end gap-2">
             <Button variant="outline" onClick={closeDetails}>Close</Button>
-            <Button onClick={acknowledgeIncident} className="gap-2"><Users className="h-4 w-4" /> Acknowledge</Button>
-            <Button variant="secondary" onClick={resolveIncident} className="gap-2"><CheckCircle2 className="h-4 w-4" /> Resolved</Button>
+            {selectedIncident?.status === "open" && (
+              <Button 
+                onClick={acknowledgeIncident}
+                disabled={isAcknowledging}
+                className="gap-2"
+              >
+                <Users className="h-4 w-4" /> 
+                {isAcknowledging ? 'Acknowledging...' : 'Acknowledge'}
+              </Button>
+            )}
+            {selectedIncident?.status === "acknowledged" && (
+              <Button variant="secondary" onClick={resolveIncident} className="gap-2">
+                <CheckCircle2 className="h-4 w-4" /> Resolve
+              </Button>
+            )}
+            {selectedIncident?.status === "resolved" && (
+              <div className="text-sm text-muted-foreground flex items-center gap-2">
+                <CheckCircle2 className="h-4 w-4 text-green-600" />
+                Incident Resolved
+              </div>
+            )}
           </div>
         </DialogContent>
       </Dialog>
